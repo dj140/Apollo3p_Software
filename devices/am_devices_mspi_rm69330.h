@@ -63,8 +63,8 @@ extern "C"
 // Display Dimensions
 //
 //*****************************************************************************
-#define AM_DEVICES_RM69330_NUM_ROWS                      360
-#define AM_DEVICES_RM69330_NUM_COLUMNS                   360
+#define AM_DEVICES_RM69330_NUM_ROWS                      460
+#define AM_DEVICES_RM69330_NUM_COLUMNS                   228
 #define AM_DEVICES_RM69330_PIXEL_SIZE                    3
 
 //*****************************************************************************

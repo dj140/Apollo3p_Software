@@ -10,7 +10,8 @@
       <TargetName>libam_bsp</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC></pArmCC>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>AMA3B2KK-KBR</Device>
@@ -323,6 +324,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -335,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>AM_PACKAGE_BGA AM_PART_APOLLO3P keil</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../devices;../../../../CMSIS/ARM/Include;../../../../utils;../../../../mcu/apollo3p;../../../../CMSIS/AmbiqMicro/Include</IncludePath>
+              <IncludePath>..\..\mcu\apollo3p;..\..\CMSIS\AmbiqMicro\Include;..\..\utils;..\..\CMSIS\ARM\Include;..\..\devices</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,9 +395,6 @@
         </Group>
         <Group>
           <GroupName>lib</GroupName>
-          <Files>
-
-          </Files>
         </Group>
       </Groups>
     </Target>
@@ -408,4 +407,3 @@
   </RTE>
 
 </Project>
-

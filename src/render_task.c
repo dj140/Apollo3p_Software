@@ -101,7 +101,7 @@ uint32_t        g_TempBuf[2][TEMP_BUFFER_SIZE / 4];
 static am_devices_mspi_rm67162_config_t SerialDisplayMSPICfg =
 {
     .eDeviceConfig            = AM_HAL_MSPI_FLASH_SERIAL_CE0,
-    .eClockFreq               = AM_HAL_MSPI_CLK_48MHZ,
+    .eClockFreq               = AM_HAL_MSPI_CLK_8MHZ,
     .ui32NBTxnBufLength       = sizeof(g_MspiDisplayQBuffer) / sizeof(uint32_t),
     .pNBTxnBuf                = g_MspiDisplayQBuffer,
     .ui32ScramblingStartAddr  = 0,

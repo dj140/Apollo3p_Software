@@ -139,30 +139,41 @@ MainTaskSetup(void)
     NVIC_SetPriority(GPIO_IRQn, NVIC_configMAX_SYSCALL_INTERRUPT_PRIORITY);
 
     // Initialize the MSPI PSRAM
-    iRet = psram_init();
-    if (iRet)
-    {
-        DEBUG_PRINT("Unable to initialize MSPI psram\n");
-        while(1);
-    }
+//    iRet = psram_init();
+//    if (iRet)
+//    {
+//        DEBUG_PRINT("Unable to initialize MSPI psram\n");
+//        while(1);
+//    }
 
     // Initialize the IOM Display
+//		am_hal_gpio_pinconfig(AM_BSP_GPIO_MSPI0_CE0, g_AM_BSP_GPIO_MSPI0_CE0);
+////    am_hal_gpio_pinconfig(AM_BSP_GPIO_DISPLAY_RESET, g_AM_BSP_GPIO_DISPLAY_RESET);
+////while(1)
+////{
 
+//    am_hal_gpio_state_write(AM_BSP_GPIO_MSPI0_CE0, AM_HAL_GPIO_OUTPUT_SET);
+//    am_util_delay_ms(100);
+//    am_hal_gpio_state_write(AM_BSP_GPIO_MSPI0_CE0, AM_HAL_GPIO_OUTPUT_CLEAR);
+//    am_util_delay_ms(200);
+//    am_hal_gpio_state_write(AM_BSP_GPIO_MSPI0_CE0, AM_HAL_GPIO_OUTPUT_SET);
+//    am_util_delay_ms(20);
+//}
     iRet = display_init();
-    if (iRet)
-    {
-        DEBUG_PRINT("Unable to initialize Display\n");
-        while(1);
-    }
+//    if (iRet)
+//    {
+//        DEBUG_PRINT("Unable to initialize Display\n");
+//        while(1);
+//    }
 
     am_hal_interrupt_master_enable();
 
     xMSPIMutex = xSemaphoreCreateMutex();
-    if (xMSPIMutex == NULL)
-    {
-        DEBUG_PRINT("Unable to Create xMspiMutex\n");
-        while(1);
-    }
+//    if (xMSPIMutex == NULL)
+//    {
+//        DEBUG_PRINT("Unable to Create xMspiMutex\n");
+//        while(1);
+//    }
 }
 
 typedef enum

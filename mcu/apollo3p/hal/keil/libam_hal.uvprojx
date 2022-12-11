@@ -10,7 +10,7 @@
       <TargetName>libam_hal</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC></pArmCC>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>AMA3B2KK-KBR</Device>
@@ -323,6 +323,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -548,9 +549,6 @@
         </Group>
         <Group>
           <GroupName>lib</GroupName>
-          <Files>
-
-          </Files>
         </Group>
       </Groups>
     </Target>
@@ -563,4 +561,3 @@
   </RTE>
 
 </Project>
-

@@ -72,10 +72,10 @@ static struct
 static am_devices_rm67162_graphic_conf_t g_sGraphic_conf =
 {
     .bus_mode       = AM_DEVICES_RM67162_SPI_WRAM,
-    .color_mode     = AM_DEVICES_RM67162_COLOR_MODE_8BIT,
+    .color_mode     = AM_DEVICES_RM67162_COLOR_MODE_16BIT,
     .scan_mode      = AM_DEVICES_RM67162_SCAN_MODE_0,
-    .max_row        = 400, //390,
-    .max_col        = 400, // 390,
+    .max_row        = 460, //390,
+    .max_col        = 228, // 390,
     .row_offset     = 0,
     .col_offset     = 0 // 6
 //    .col_offset     = 100
@@ -92,9 +92,9 @@ static am_hal_mspi_dev_config_t  SerialDisplayMSPICfg =
     .eDeviceConfig        = AM_HAL_MSPI_FLASH_SERIAL_CE0,
     .ui8WriteLatency      = 0,
     .eSpiMode             = AM_HAL_MSPI_SPI_MODE_0,
-    .eClockFreq           = AM_HAL_MSPI_CLK_48MHZ,
+    .eClockFreq           = AM_HAL_MSPI_CLK_8MHZ,
     .bEnWriteLatency      = false,
-    .bSendAddr            = false,
+    .bSendAddr            = true,
     .bSendInstr           = true,
     .bTurnaround          = false,
     .bEmulateDDR          = false,
@@ -143,10 +143,10 @@ am_devices_rm67162_command_write(void *pHandle,
   Transaction.bScrambling             = false;
   Transaction.bDCX                    = true;
   Transaction.eDirection              = AM_HAL_MSPI_TX;
-  Transaction.bSendAddr               = false;
-  Transaction.ui32DeviceAddr          = 0;
+  Transaction.bSendAddr               = true;
+  Transaction.ui32DeviceAddr          = ui32Instr << 8;
   Transaction.bSendInstr              = true;
-  Transaction.ui16DeviceInstr         = ui32Instr;
+  Transaction.ui16DeviceInstr         = AM_DEVICES_MSPI_RM67162_CMD_WRITE;
   Transaction.bTurnaround             = false;
   Transaction.bEnWRLatency            = false;
   Transaction.bQuadCmd                = false;
@@ -229,10 +229,10 @@ am_devices_rm67162_reset(void *pHandle)
     am_hal_gpio_state_write(AM_BSP_GPIO_DISPLAY_RESET, AM_HAL_GPIO_OUTPUT_SET);
     am_util_delay_ms(20);
 #endif
-    if ( am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SWRESET, NULL, 0) )
-    {
-        return AM_DEVICES_RM67162_STATUS_ERROR;
-    }
+  //  if ( am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SWRESET, NULL, 0) )
+  //{
+  //     return AM_DEVICES_RM67162_STATUS_ERROR;
+  // }
     am_util_delay_ms(300);
 
     return AM_DEVICES_RM67162_STATUS_SUCCESS;
@@ -689,6 +689,18 @@ am_devices_lcm_init(void *pHandle, am_devices_rm67162_graphic_conf_t *psGraphic_
     uint8_t data[10] = {0};
 
     /*     Tearing effect line ON */
+
+	  if ( am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SLEEP_OUT, NULL, 0) )
+	  {
+		  return AM_DEVICES_RM67162_STATUS_ERROR;
+	  }
+
+	  am_util_delay_ms(10);
+	
+	  data[0] = 0x5A;
+    data[1] = 0x5A;
+	  am_devices_rm67162_command_write(pHandle, 0xC0, data, 2);
+		
     data[0] = 0x0;
     if (am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_TEARING_EFFECT_LINE_ON, data, 1))
     {
@@ -707,11 +719,6 @@ am_devices_lcm_init(void *pHandle, am_devices_rm67162_graphic_conf_t *psGraphic_
         return AM_DEVICES_RM67162_STATUS_ERROR;
     }
 
-    data[0] = psGraphic_conf->scan_mode;
-    if (am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SCAN_MODE, data, 1))
-    {
-        return AM_DEVICES_RM67162_STATUS_ERROR;
-    }
 
     data[0] = 0x20;
     if (am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SET_WRITE_DISPLAY_CTRL, data, 1))
@@ -725,25 +732,24 @@ am_devices_lcm_init(void *pHandle, am_devices_rm67162_graphic_conf_t *psGraphic_
     am_devices_set_row_col(pHandle, psGraphic_conf);
 
     /* set tear scan-line */
-    data[0] = 0x00;
-    data[1] = 0x28; // 0xf0
+    data[0] = 0x01;
+    data[1] = 0xCB; // 0xf0
     if ( am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SET_TEAR_SCANLINE, data, 2) )
     {
         return AM_DEVICES_RM67162_STATUS_ERROR;
     }
-    if ( am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_SLEEP_OUT, NULL, 0) )
-    {
-        return AM_DEVICES_RM67162_STATUS_ERROR;
-    }
 
-    am_util_delay_ms(130);
+
+    am_util_delay_ms(50);
 
     if ( am_devices_rm67162_command_write(pHandle, AM_DEVICES_RM67162_DISPLAY_ON, NULL, 0) )
     {
         return AM_DEVICES_RM67162_STATUS_ERROR;
     }
 
-    am_util_delay_ms(200);
+    am_util_delay_ms(50);
+	  data[0] = 0x81;
+	  am_devices_rm67162_command_write(pHandle, 0xBA, data, 1);
 
     //    am_hal_gpio_state_write(AM_BSP_GPIO_DISPLAY_BL, AM_HAL_GPIO_OUTPUT_CLEAR);
 
@@ -860,8 +866,8 @@ am_devices_mspi_rm67162_init(uint32_t ui32Module,
     //
     // Read the Device ID.
     //
-    am_devices_rm67162_read_id((void*)&gAmRm67162[ui32Index], &ui32DeviceID);
-    am_util_stdio_printf("RM67167 Device ID = %6X\n", (ui32DeviceID & 0x00FFFFFF));
+//    am_devices_rm67162_read_id((void*)&gAmRm67162[ui32Index], &ui32DeviceID);
+//    am_util_stdio_printf("RM67167 Device ID = %6X\n", (ui32DeviceID & 0x00FFFFFF));
 
     //
     // Device specific TFT display initialization.
@@ -869,10 +875,10 @@ am_devices_mspi_rm67162_init(uint32_t ui32Module,
     am_util_delay_ms(500);
     am_devices_rm67162_reset((void*)&gAmRm67162[ui32Index]);
     ui32Status = am_devices_lcm_init((void*)&gAmRm67162[ui32Index], &g_sGraphic_conf);
-    if (AM_DEVICES_RM67162_STATUS_SUCCESS != ui32Status)
-    {
-      return AM_DEVICES_RM67162_STATUS_ERROR;
-    }
+//    if (AM_DEVICES_RM67162_STATUS_SUCCESS != ui32Status)
+//    {
+//      return AM_DEVICES_RM67162_STATUS_ERROR;
+//    }
     gAmRm67162[ui32Index].bOccupied = true;
 
     //am_hal_gpio_state_write(AM_BSP_GPIO_DISPLAY_BL, AM_HAL_GPIO_OUTPUT_SET);

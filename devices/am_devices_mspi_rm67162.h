@@ -58,8 +58,8 @@ extern "C"
 // Display Dimensions
 //
 //*****************************************************************************
-#define AM_DEVICES_RM67162_NUM_ROWS                      400
-#define AM_DEVICES_RM67162_NUM_COLUMNS                   400
+#define AM_DEVICES_RM67162_NUM_ROWS                      460
+#define AM_DEVICES_RM67162_NUM_COLUMNS                   228
 #define AM_DEVICES_RM67162_PIXEL_SIZE                    1
 
 //*****************************************************************************
@@ -67,6 +67,7 @@ extern "C"
 // Global definitions for the commands
 //
 //*****************************************************************************
+#define AM_DEVICES_MSPI_RM67162_CMD_WRITE                0x02
 #define AM_DEVICES_RM67162_SWRESET                       0x01
 #define AM_DEVICES_RM67162_READ_ID                       0x04
 #define AM_DEVICES_RM67162_RD_PXL_FORMAT                 0x0C
@@ -118,7 +119,7 @@ typedef enum
 
 #define AM_DEVICES_RM67162_COLOR_MODE_8BIT              0x72
 #define AM_DEVICES_RM67162_COLOR_MODE_3BIT              0x71
-#define AM_DEVICES_RM67162_COLOR_MODE_16BIT             0x75
+#define AM_DEVICES_RM67162_COLOR_MODE_16BIT             0x55
 #define AM_DEVICES_RM67162_COLOR_MODE_24BIT             0x77
 
 #define AM_DEVICES_RM67162_SCAN_MODE_0                  0x40

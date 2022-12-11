@@ -498,7 +498,7 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOM5_SDA;
 //  MSPI0_CE0 pin: MSPI0 chip select 0.  Note: CE1 must be disabled or tristated when using this pin for CE.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_MSPI0_CE0           28
+#define AM_BSP_GPIO_MSPI0_CE0           19
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_MSPI0_CE0;
 #define AM_BSP_MSPI0_CE0_CHNL           0
 
@@ -556,7 +556,7 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_MSPI0_SCK;
 //  MSPI1_CE0 pin: MSPI1 chip select 0.  Note: CE1 must be disabled or tristated when using this pin for CE.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_MSPI1_CE0           50
+#define AM_BSP_GPIO_MSPI1_CE0           61
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_MSPI1_CE0;
 #define AM_BSP_MSPI1_CE0_CHNL           0
 
@@ -720,7 +720,7 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_DISPLAY_PWRCTRL;
 //  DISPLAY_TE pin: Display TE signal.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_DISPLAY_TE          38
+#define AM_BSP_GPIO_DISPLAY_TE          33
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_DISPLAY_TE;
 
 //*****************************************************************************
@@ -728,7 +728,7 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_DISPLAY_TE;
 //  DISPLAY_RESET pin: Display reset control.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_DISPLAY_RESET       11
+#define AM_BSP_GPIO_DISPLAY_RESET       72
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_DISPLAY_RESET;
 
 //*****************************************************************************

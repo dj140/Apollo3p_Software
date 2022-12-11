@@ -144,8 +144,8 @@ am_bsp_uart_pwrsave_t;
 //*****************************************************************************
 //
 //
-#define AM_BSP_MSPI_PSRAM_INST              0
-#define AM_BSP_MSPI_DISPLAY_INST            1
+#define AM_BSP_MSPI_PSRAM_INST              1
+#define AM_BSP_MSPI_DISPLAY_INST            0
 
 //*****************************************************************************
 //
