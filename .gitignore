@@ -29,7 +29,6 @@
 *.elf
 *.hex
 *.h86
-*.lib
 *.obj
 *.o
 *.sbr
@@ -63,7 +62,6 @@
 *.pdsc
 *.plg
 # define exception below if needed
-*.sct
 *.sfd
 *.sfr
 
